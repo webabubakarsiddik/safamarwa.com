@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
                     {Array.from({ length: 5 }).map((_, index) => (
                         <Image
                             key={index}
-                            className="h-3 w-3"
+                            className="h-3 w-3 text-green-400"
                             src={
                                 index < Math.floor(4)
                                     ? assets.star_icon
