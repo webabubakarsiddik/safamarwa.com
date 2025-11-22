@@ -1,6 +1,7 @@
 import React from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -19,15 +20,15 @@ const Footer = () => {
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <a href="#">
+        <Link href="#">
           <Image src={assets.facebook_icon} alt="facebook_icon" />
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="#">
           <Image src={assets.twitter_icon} alt="twitter_icon" />
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="#">
           <Image src={assets.instagram_icon} alt="instagram_icon" />
-        </a>
+        </Link>
       </div>
     </div>
   );

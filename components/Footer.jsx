@@ -1,6 +1,7 @@
 import React from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -21,16 +22,16 @@ const Footer = () => {
             <h2 className="font-medium text-gray-900 mb-5">Company</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="hover:underline transition" href="#">Home</a>
+                <Link className="hover:underline transition" href="#">Home</Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">About us</a>
+                <Link className="hover:underline transition" href="#">About us</Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">Contact us</a>
+                <Link className="hover:underline transition" href="#">Contact us</Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">Privacy policy</a>
+                <Link className="hover:underline transition" href="#">Privacy policy</Link>
               </li>
             </ul>
           </div>
@@ -39,10 +40,21 @@ const Footer = () => {
         <div className="w-1/2 flex items-start justify-start md:justify-center">
           <div>
             <h2 className="font-medium text-gray-900 mb-5">Get in touch</h2>
-            <div className="text-sm space-y-2">
+            <div className="text-sm space-y-2 mb-5">
               <p>+1-234-567-890</p>
               <p>contact@greatstack.dev</p>
             </div>
+            <div className="flex items-center gap-3">
+              <Link href="#">
+               <Image src={assets.facebook_icon} alt="facebook_icon" />
+             </Link>
+              <Link href="#">
+                <Image src={assets.twitter_icon} alt="twitter_icon" />
+             </Link>
+             <Link href="#">
+              <Image src={assets.instagram_icon} alt="instagram_icon" />
+              </Link>
+      </div>
           </div>
         </div>
       </div>
