@@ -12,17 +12,17 @@ async function connectDB() {
         return cached.conn
     }
 
-    if (!cached.Promise) {
+    if (!cached.promise) {
         const opts = {
             bufferCommands:false
         }
 
-        cached.Promise =  mongoose.connect(`${process.env.MONGODB_URI}/puickcart`,opts).then( mongoose => {
+        cached.promise =  mongoose.connect(`${process.env.MONGODB_URI}/quickcart`,opts).then( mongoose => {
             return mongoose
         })
     }
 
-    cached.conn = await cached.Promise
+    cached.conn = await cached.promise
     return cached.conn
 
 }
