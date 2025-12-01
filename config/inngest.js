@@ -1,4 +1,4 @@
-import {connectDB} from "@/config/db";
+import connectDB from "@/config/db";
 import { Order } from "@/models/Order";
 import { User } from "@/models/User";
 import { Inngest } from "inngest";
