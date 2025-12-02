@@ -1,12 +1,14 @@
-
 import { inngest } from "@/config/inngest";
 import Product from "@/models/Product";
 import { User } from "@/models/User";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import connectDB from "@/config/db";
 
 export async function POST(request) {
   try {
+    await connectDB();
+
     const { userId } = getAuth(request);
     const { address, items } = await request.json();
 
@@ -19,13 +21,12 @@ export async function POST(request) {
     for (const item of items) {
       const product = await Product.findById(item.product);
       if (!product) continue;
-
       amount += product.offerPrice * item.quantity;
     }
 
-    // 2% extra charge (if needed)
     const totalAmount = amount + Math.floor(amount * 0.02);
 
+    // Send to Inngest
     await inngest.send({
       name: "order/created",
       data: {
@@ -37,7 +38,7 @@ export async function POST(request) {
       },
     });
 
-    // clear user cart
+    // Clear cart
     const user = await User.findById(userId);
     user.cartItems = [];
     await user.save();
@@ -48,5 +49,3 @@ export async function POST(request) {
     return NextResponse.json({ success: false, message: error.message });
   }
 }
-
-
