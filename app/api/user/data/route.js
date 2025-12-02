@@ -1,14 +1,14 @@
 import { User } from "@/models/User";
 import connectDB from "@/config/db";
 import { getAuth } from "@clerk/nextjs/server";
-
+import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
     const { userId } = getAuth(request);
 
     if (!userId) {
-      return Response.json(
+      return NextResponse.json(
         { success: false, message: "Unauthorized" },
         { status: 401 }
       );
@@ -19,15 +19,16 @@ export async function GET(request) {
     const user = await User.findById(userId);
 
     if (!user) {
-      return Response.json(
+      return NextResponse.json(
         { success: false, message: "User Not Found" },
         { status: 404 }
       );
     }
 
-    return Response.json({ success: true, user });
+    return NextResponse.json({ success: true, user });
   } catch (error) {
-    return Response.json(
+    console.error(error);
+    return NextResponse.json(
       { success: false, message: error.message },
       { status: 500 }
     );

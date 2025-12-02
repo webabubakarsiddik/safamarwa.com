@@ -5,17 +5,29 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     try {
-        
+        const { userId } = getAuth(request);
+        const { address } = await request.json();
 
-        const {userId} = getAuth(request)
-        const {address} = await request.json()
+        if (!address) {
+            return NextResponse.json(
+                { success: false, message: "Address data is required" },
+                { status: 400 }
+            );
+        }
 
+        await connectDB();
+        const newAddress = await Address.create({ ...address, userId });
 
-        await connectDB()
-        const newAddress = await Address.create({...address,userId})
-
-        return NextResponse.json({ success: true, message: "Address added successfully",newAddress})
+        return NextResponse.json({
+            success: true,
+            message: "Address added successfully",
+            newAddress
+        });
     } catch (error) {
-        return NextResponse.json({ success: false, nessage: error.message})
+        console.error(error);
+        return NextResponse.json(
+            { success: false, message: error.message },
+            { status: 500 }
+        );
     }
 }

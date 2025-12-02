@@ -2,17 +2,17 @@ import connectDB from "@/config/db";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
- 
+export async function GET() {
+  try {
+    await connectDB();
 
- export async function GET(request) {
-    try {
+    const products = await Product.find({});
+    return NextResponse.json({ success: true, products });
 
-
-        await connectDB()
-
-        const products = await Product.find({})
-        return NextResponse.json({success:true, products})
-    } catch (error) {
-        return NextResponse.json({ success: false, nessage: error.message})
-    }
- }
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
+  }
+}

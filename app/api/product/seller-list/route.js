@@ -4,23 +4,27 @@ import Product from "@/models/Product";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
- 
+export async function GET(request) {
+  try {
+    const { userId } = getAuth(request);
 
- export async function GET(request) {
-    try {
-        const { userId } = getAuth(request)
+    const isSeller = await authSeller(userId);   // <-- FIXED
 
-        const isSeller = authSeller(userId)
-
-        if (!isSeller) {
-            return NextResponse.json({ success: false, nessage: 'not authorized'});
-        }
-
-        await connectDB()
-
-        const products = await Product.find({})
-        return NextResponse.json({success:true, products})
-    } catch (error) {
-        return NextResponse.json({ success: false, nessage: error.message})
+    if (!isSeller) {
+      return NextResponse.json(
+        { success: false, message: "not authorized" },
+        { status: 401 }
+      );
     }
- }
+
+    await connectDB();
+
+    const products = await Product.find({});
+    return NextResponse.json({ success: true, products });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
+  }
+}
