@@ -1,5 +1,4 @@
 'use client'
-import { productsDummyData } from "@/assets/assets";
 import { useAuth, useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -72,13 +71,14 @@ export const AppContextProvider = (props) => {
             cartData[itemId] = 1;
         }
         setCartItems(cartData);
+        toast.success('Item addet to cort')
         if (user) {
             try {
                 const token = await getToken()
-                await axios.post('/api/cart/update', {cartData}, {headers:{Authorization: `Bearer ${token}`}})
-                toast.success('Item addet to cort')
+
+                await axios.post('/api/cart/update', {cartData}, {headers:{Authorization: ''}})
             } catch (error) {
-                toast.error(error.message)
+                
             }
         }
 
@@ -93,15 +93,7 @@ export const AppContextProvider = (props) => {
             cartData[itemId] = quantity;
         }
         setCartItems(cartData)
-        if (user) {
-            try {
-                const token = await getToken()
-                await axios.post('/api/cart/update', {cartData}, {headers:{Authorization: `Bearer ${token}`}})
-                toast.success('Cart Update')
-            } catch (error) {
-                toast.error(error.message)
-            }
-        }
+
     }
 
     const getCartCount = () => {
