@@ -1,7 +1,8 @@
+// models/Product.js
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  userId: { type: String, required: true, ref: "User" }, // 'User' matches your User model
+  userId: { type: String, required: true, ref: "User" },
   name: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
@@ -11,7 +12,6 @@ const productSchema = new mongoose.Schema({
   date: { type: Number, required: true },
 });
 
-// Check if model already exists, otherwise create it
 const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
 
 export default Product;

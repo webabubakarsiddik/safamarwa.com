@@ -4,44 +4,45 @@ import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  try {
-    const { userId } = getAuth(request);
+    try {
+        const { userId } = getAuth(request);
 
-    if (!userId) {
-      return NextResponse.json(
-        { success: false, message: "Unauthorized" },
-        { status: 401 }
-      );
-    }
+        if (!userId) {
+            return NextResponse.json(
+                { success: false, message: "Authentication required" },
+                { status: 401 }
+            );
+        }
 
-    const { cartData } = await request.json();
+        const { cartData } = await request.json();
 
-    if (!cartData || typeof cartData !== "object") {
-      return NextResponse.json(
-        { success: false, message: "Invalid cart data" },
-        { status: 400 }
-      );
-    }
+        if (!cartData || typeof cartData !== "object") {
+            return NextResponse.json(
+                { success: false, message: "Invalid cart data" },
+                { status: 400 }
+            );
+        }
 
-    await connectDB();
+        await connectDB();
+        const result = await User.updateOne(
+            { userId: userId }, 
+            { $set: { cartItems: cartData } }
+        );
+        
+        
+        if (result.matchedCount === 0) {
+            return NextResponse.json(
+                { success: false, message: "User not found in database" },
+                { status: 404 }
+            );
+        }
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return NextResponse.json(
-        { success: false, message: "User not found" },
-        { status: 404 }
-      );
-    }
-
-    user.cartItems = cartData;
-    await user.save();
-
-    return NextResponse.json({ success: true, message: "Cart updated" });
-  } catch (error) {
-    console.error("Error updating cart:", error);
-    return NextResponse.json(
-      { success: false, message: error.message },
-      { status: 500 }
-    );
-  }
+        return NextResponse.json({ success: true, message: "Cart updated successfully" });
+    } catch (error) {
+        console.error("Error updating cart:", error);
+        return NextResponse.json(
+            { success: false, message: error.message },
+            { status: 500 }
+        );
+    }
 }
