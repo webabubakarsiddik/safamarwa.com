@@ -9,7 +9,8 @@ import Loading from "@/components/Loading";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export const MyOrders = () => {
+// 💡 Change: Removed 'export' and replaced with 'const'
+const MyOrders = () => {
 
     const { currency, getToken, user } = useAppContext();
 
@@ -23,7 +24,6 @@ export const MyOrders = () => {
              const {data} = await axios.get('/api/order/list', {headers:{Authorization: `Bearer ${token}`}})
 
              if (data.success) {
-                // ১. ফিক্স: সার্ভার থেকে সর্টেড ডেটা আসায় .reverse() বাদ দেওয়া হলো।
                 setOrders(data.orders)
                 setLoading(false)
              }else{
@@ -31,7 +31,7 @@ export const MyOrders = () => {
              }
         } catch (error) {
              toast.error(error.message)
-             setLoading(false) // এরর হলেও লোডিং বন্ধ করতে হবে
+             setLoading(false)
         }
     }
 
@@ -67,12 +67,10 @@ export const MyOrders = () => {
                                     <p>
                                         <span className="font-medium">{order.address.fullName}</span>
                                         <br />
-                                        {/* ২. ফিক্স: 'area' এর পরিবর্তে 'street' বা 'postalCode' ব্যবহার করা হলো */}
                                         <span >{order.address.street || order.address.postalCode}</span> 
                                         <br />
                                         <span>{`${order.address.city}, ${order.address.state}`}</span>
                                         <br />
-                                        {/* ৩. ফিক্স: 'phoneNumber' এর পরিবর্তে 'phone' ব্যবহার করা হলো */}
                                         <span>{order.address.phone}</span> 
                                     </p>
                                 </div>
@@ -94,3 +92,5 @@ export const MyOrders = () => {
     );
 };
 
+// 🌟 FIX: Next.js pages MUST use a default export.
+export default MyOrders;
