@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState, useCallback } from "react";
-// import { assets } from "@/assets/assets"; // MOCKED
-// import { useAppContext } from "@/context/AppContext"; // MOCKED
-// import axios from "axios"; // MOCKED
-// import toast from "react-hot-toast"; // MOCKED
-// import Navbar from "@/components/Navbar"; // MOCKED
-// import Footer from "@/components/Footer"; // MOCKED
-// import Loading from "@/components/Loading"; // MOCKED
-// import Image from "next/image"; // MOCKED
+import { assets } from "@/assets/assets"; // MOCKED
+import { useAppContext } from "@/context/AppContext"; // MOCKED
+import axios from "axios"; // MOCKED
+import toast from "react-hot-toast"; // MOCKED
+import Navbar from "@/components/Navbar"; // MOCKED
+import Footer from "@/components/Footer"; // MOCKED
+import Loading from "@/components/Loading"; // MOCKED
+import Image from "next/image"; // MOCKED
 
 // --- START: Mock Dependencies for Single-File Execution ---
 const toast = {
