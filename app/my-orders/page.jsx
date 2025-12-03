@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState, useCallback } from "react";
 import { assets } from "@/assets/assets"; // MOCKED
-import { useAppContext } from "@/context/AppContext"; // MOCKED
 import axios from "axios"; // MOCKED
 import toast from "react-hot-toast"; // MOCKED
 import Navbar from "@/components/Navbar"; // MOCKED
@@ -21,27 +20,27 @@ const Footer = () => <footer className="bg-gray-800 text-white p-4 text-center t
 const Image = ({ src, alt, className }) => <img src={src} alt={alt} className={className} onError={(e) => e.target.src = 'https://placehold.co/64x64/9ca3af/ffffff?text=X'} />;
 
 // Mock Order Data
-const mockOrders = [
-    {
-        _id: 'ord_101',
-        amount: 45.99,
-        date: new Date(Date.now() - 86400000).toISOString(),
-        items: [
-            { product: { name: 'Gourmet Coffee', offerPrice: 20.00, image: 'url1' }, quantity: 1 },
-            { product: { name: 'Ceramic Mug', offerPrice: 10.99, image: 'url2' }, quantity: 2 },
-        ],
-        address: { fullName: 'Jane Doe', street: '123 Main St', city: 'Dhaka', state: 'Dhaka', postalCode: '1212', phone: '01700000001' }
-    },
-    {
-        _id: 'ord_102',
-        amount: 15.50,
-        date: new Date(Date.now() - 3 * 86400000).toISOString(),
-        items: [
-            { product: { name: 'Artisan Bread', offerPrice: 15.50, image: 'url3' }, quantity: 1 },
-        ],
-        address: { fullName: 'John Smith', street: '456 Side Rd', city: 'Chittagong', state: 'Chittagong', postalCode: '4000', phone: '01800000002' }
-    }
-];
+// const mockOrders = [
+//     {
+//         _id: 'ord_101',
+//         amount: 45.99,
+//         date: new Date(Date.now() - 86400000).toISOString(),
+//         items: [
+//             { product: { name: 'Gourmet Coffee', offerPrice: 20.00, image: 'url1' }, quantity: 1 },
+//             { product: { name: 'Ceramic Mug', offerPrice: 10.99, image: 'url2' }, quantity: 2 },
+//         ],
+//         address: { fullName: 'Jane Doe', street: '123 Main St', city: 'Dhaka', state: 'Dhaka', postalCode: '1212', phone: '01700000001' }
+//     },
+//     {
+//         _id: 'ord_102',
+//         amount: 15.50,
+//         date: new Date(Date.now() - 3 * 86400000).toISOString(),
+//         items: [
+//             { product: { name: 'Artisan Bread', offerPrice: 15.50, image: 'url3' }, quantity: 1 },
+//         ],
+//         address: { fullName: 'John Smith', street: '456 Side Rd', city: 'Chittagong', state: 'Chittagong', postalCode: '4000', phone: '01800000002' }
+//     }
+// ];
 
 // Mock axios implementation
 const axios = {
